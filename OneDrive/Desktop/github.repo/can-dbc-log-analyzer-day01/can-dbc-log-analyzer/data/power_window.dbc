@@ -1,0 +1,37 @@
+VERSION ""
+
+NS_ :
+    BA_DEF_
+    BA_
+    VAL_
+
+BS_:
+
+BU_: BCM DCU ECM
+
+BO_ 512 BCM_WindowSwitch: 8 BCM
+ SG_ SwUp : 0|1@1+ (1,0) [0|1] "" DCU
+ SG_ SwDown : 1|1@1+ (1,0) [0|1] "" DCU
+ SG_ AliveCounter : 4|4@1+ (1,0) [0|15] "" DCU
+
+BO_ 528 DCU_WindowStatus: 8 DCU
+ SG_ Position : 0|8@1+ (0.5,0) [0|100] "%" BCM
+ SG_ MotorCurrent : 8|8@1+ (0.1,0) [0|25.5] "A" BCM
+ SG_ MotorState : 16|2@1+ (1,0) [0|2] "" BCM
+ SG_ PinchFlag : 18|1@1+ (1,0) [0|1] "" BCM
+ SG_ DTC_SwitchTimeout : 19|1@1+ (1,0) [0|1] "" BCM
+ SG_ Vbat : 24|8@1+ (0.1,0) [0|25.5] "V" BCM
+
+BO_ 2364539904 EEC1: 8 ECM
+ SG_ EngineSpeed : 24|16@1+ (0.125,0) [0|8031.875] "rpm" Vector__XXX
+
+BO_ 768 HIL_Sensors: 8 Vector__XXX
+ SG_ PosRaw : 7|16@0+ (0.01,0) [0|100] "%" DCU
+ SG_ Temperature : 16|8@1- (1,0) [-40|125] "degC" DCU
+
+BA_DEF_ BO_ "GenMsgCycleTime" INT 0 10000;
+BA_ "GenMsgCycleTime" BO_ 512 20;
+BA_ "GenMsgCycleTime" BO_ 528 100;
+BA_ "GenMsgCycleTime" BO_ 2364539904 100;
+
+VAL_ 528 MotorState 0 "Stop" 1 "Up" 2 "Down" ;
